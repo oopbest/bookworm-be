@@ -12,6 +12,10 @@ app.use(express.json());
 app.use(cors());
 
 // routes
+app.get("/health", (req, res) => {
+  res.status(200).send("Server is awake!");
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/books", bookRoutes);
 
