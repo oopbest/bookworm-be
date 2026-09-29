@@ -109,4 +109,22 @@ router.get("/user", protectRoute, async (req, res) => {
   }
 });
 
+router.get("/:id", protectRoute, async (req, res) => {
+  try {
+    const book = await Book.findById(req.params.id).populate(
+      "user",
+      "username profileImage",
+    );
+
+    if (!book) {
+      return res.status(404).json({ message: "Book not found" });
+    }
+
+    res.status(200).json(book);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 export default router;
